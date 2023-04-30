@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Bewhole</title>
+  <style>
+    .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .logo-container img {
+    padding-top: 25px;
+    width: 200px;
+    height: auto;
+    }
+    .btn_one {
+    font-size: 3em;
+    padding: 0.5em 2em;
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    }
+    .text-box {
+    border: 1px solid #6d6fd5;;
+    padding: 10px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+    .text-box p {
+      font-size: 25px;
+      margin: 0;
+    }
+    /* Changes for mobile responsiveness and font size */
+    @media screen and (max-width: 600px) {
+      .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    .text-box p {
+    font-size: 15px;
+    }
+    .logo-container img {
+    padding-top: 25px;
+    width: 200px;
+    height: auto;
+    }
+    .btn_one {
+    font-size: 3em;
+    padding: 0.5em 2em;
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    }
+    .text-box {
+    border: 1px solid #6d6fd5;;
+    padding: 10px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+      }
+    }
+    </style>
+</head>
+<body>
+  <header>      
+    <div class="logo-container">
+        <img src="{% static 'images/logo.png' %}" alt="Bewhole">
+      </div>
+</header>
+<div class="container">
+  <div class="row justify-content-center my-5">
+    <div class="col-md-6">
+      <div class="text-box">
+        <p>{{ line }}</p>
+      </div>
+      <br>
+      <form method="post" action="{% url 'display_line' line_number=line_number|add:1 language=language %}">
+        {% csrf_token %}
+        <label style="font-size: 20px;"><input type="radio" name="mode" value="normal" {% if mode == 'normal' %}checked{% endif %}>Normal</label>
+        <label style="font-size: 20px;"><input type="radio" name="mode" value="skip" {% if mode == 'skip' %}checked{% endif %}>Speed</label>
+        <br><br>
+        {% if mode == 'skip' %}
+          <input type="hidden" name="lines_to_skip" value="1">
+        {% else %}
+          <input type="hidden" name="lines_to_skip" value="0">
+        {% endif %}
+
+        <input type="submit" value="Next" class="btn_one btn-primary btn-block">
+    </form>
+      <a href="{% url 'upload_file' %}" class="btn btn-warning">Back to Upload File</a>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNS"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+</html>
